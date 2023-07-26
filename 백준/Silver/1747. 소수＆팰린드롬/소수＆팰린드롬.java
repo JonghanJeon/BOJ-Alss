@@ -36,10 +36,12 @@ public class Main {
 		int front = 0;
 		int back = arr.length-1;
 		while(front < back) {
-			if(arr[front] != arr[back])
-				return false;
-			front ++;
-			back --;
+			if(arr[front] == arr[back]) {
+				front ++;
+				back --; 
+				continue;
+			}
+			return false;
 		}
 		return true;
 	}
