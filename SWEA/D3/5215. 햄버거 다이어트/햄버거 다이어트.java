@@ -23,10 +23,6 @@ public class Solution
 				arr[i][1] = sc.nextInt();
 			}
 			
-			Arrays.sort(arr, (o1, o2) -> {
-				return o2[0] - o1[0];
-			});
-			
 			answer = 0;
 			
 			a(0, 0, 0);
