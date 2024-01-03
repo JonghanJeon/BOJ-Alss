@@ -13,24 +13,15 @@ public class Main {
                 map.put(c, map.get(c)+1);
             else map.put(c, 1);
         }
-
+        
+        char answer = ' ';
         int max = 0;
         for(char key : map.keySet()){
             if(max < map.get(key)){
                 max = map.get(key);
-            }
-        }
-
-        char answer = ' ';
-        int count = 0;
-        for(char key : map.keySet()){
-            if(map.get(key) == max){
-                count ++;
                 answer = key;
-            }
-            if(count == 2){
+            } else if (max == map.get(key)) {
                 answer = '?';
-                break;
             }
         }
 
