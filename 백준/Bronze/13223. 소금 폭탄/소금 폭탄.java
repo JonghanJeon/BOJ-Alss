@@ -33,9 +33,9 @@ public class Main {
             resultTime = ONEDAYTIME - initTime + finalTime;
         else resultTime = finalTime - initTime;
 
-        answerHour = resultTime / 3600;
-        answerMin = (resultTime % 3600) / 60;
         answerSec = resultTime % 60;
+        answerMin = (resultTime / 60) % 60;
+        answerHour = resultTime / 3600;
 
         System.out.printf("%02d:%02d:%02d", answerHour, answerMin, answerSec);
     }
