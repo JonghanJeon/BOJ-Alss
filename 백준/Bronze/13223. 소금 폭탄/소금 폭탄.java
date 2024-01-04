@@ -29,10 +29,8 @@ public class Main {
 
         int resultTime = 0;
 
-        if(finalTime < initTime)
+        if(finalTime <= initTime)
             resultTime = ONEDAYTIME - initTime + finalTime;
-        else if (finalTime == initTime)
-            resultTime = ONEDAYTIME;
         else resultTime = finalTime - initTime;
 
         answerHour = resultTime / 3600;
