@@ -11,6 +11,7 @@ public class Main {
         int N = Integer.parseInt(br.readLine());
 
         List<Staff> list = new ArrayList<>();
+        List<StaffChip> chipList = new ArrayList<>();
 
         // 5% 미만 짤라내기
         for (int i = 0; i < N; i++) {
@@ -21,47 +22,45 @@ public class Main {
             if(((float) votes/(float) allVote * 100) < 5)
                 continue;
 
-            list.add(new Staff(staffName, votes));
-        }
-
-        list.sort((Comparator.comparing(staff -> staff.name)));
-
-        for(Staff staff : list){
-            for (int i = 1; i <= 14; i++) {
-                staff.arr.offer(staff.votes / i);
+            chipList.add(new StaffChip(staffName));
+            for (int j = 1; j <= 14; j++) {
+                list.add(new Staff(staffName, votes/j));
             }
         }
 
-        int count = 1;
-        while (count <= 14){
-            int max = 0;
-            int num = 0;
-            for (int i = 0; i < list.size(); i++) {
-                Staff staff = list.get(i);
-                int peek = staff.arr.peek();
-                if(peek > max){
-                    max = peek;
-                    num = i;
-                }
+        list.sort((Comparator.comparing(staff -> -staff.score)));
+        chipList.sort((Comparator.comparing(staffChip -> staffChip.name)));
+
+        for (int i = 0; i < 14; i++) {
+            for(StaffChip staffChip : chipList){
+                if(list.get(i).name.equals(staffChip.name))
+                    staffChip.chip++;
             }
-            Staff staff = list.get(num);
-            staff.arr.poll();
-            staff.chip ++;
-            count ++;
         }
 
-        list.forEach(staff -> System.out.println(staff.name + " " + staff.chip));
+        StringBuilder sb = new StringBuilder();
+        chipList.forEach(o -> sb.append(o.name).append(" ").append(o.chip).append("\n"));
+
+        System.out.println(sb);
+
     }
 }
 
-class Staff {
+class Staff{
     String name;
-    int votes;
-    int chip = 0;
-    Queue<Integer> arr= new LinkedList<>();
+    int score;
 
-    public Staff(String name, int votes) {
+    public Staff(String name, int score) {
         this.name = name;
-        this.votes = votes;
+        this.score = score;
+    }
+}
+
+class StaffChip{
+    String name;
+    int chip = 0;
+
+    public StaffChip(String name) {
+        this.name = name;
     }
 }
