@@ -23,11 +23,10 @@ public class Main {
 		Collections.sort(members, new Comparator<Member>() {
 			@Override
 			public int compare(Member o1, Member o2) {
-				if(o1.age > o2.age)
-					return 1;
-				else if (o1.age < o2.age)
-					return -1;
-				else return o1.idx - o2.idx;
+				if (o1.age != o2.age)
+					return o1.age - o2.age;
+				else
+					return o1.idx - o2.idx;
 			}
 		});
 
@@ -40,7 +39,7 @@ public class Main {
 		System.out.println(sb);
 	}
 
-	public static class Member{
+	public static class Member {
 		int age;
 		String name;
 		int idx;
