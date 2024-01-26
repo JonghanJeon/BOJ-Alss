@@ -14,6 +14,7 @@ public class Main {
 
 			char[] arr = br.readLine().toCharArray();
 
+			// 왼쪽꺼 지워보기
 			int left = 0, right = arr.length - 1;
 			int cnt = 0;
 			while (left < right) {
@@ -28,9 +29,6 @@ public class Main {
 					if (arr[left + 1] == arr[right]) {
 						left++;
 						cnt = 1;
-					} else if (arr[left] == arr[right - 1]) {
-						right--;
-						cnt = 1;
 					} else {
 						cnt = 2;
 						break;
@@ -39,7 +37,8 @@ public class Main {
 
 			}
 
-			left = 0; right = arr.length - 1;
+			left = 0;
+			right = arr.length - 1;
 			int cnt2 = 0;
 			while (left < right) {
 				if (arr[left] == arr[right]) {
@@ -53,10 +52,7 @@ public class Main {
 					if (arr[left] == arr[right - 1]) {
 						right--;
 						cnt2 = 1;
-					} else if (arr[left + 1] == arr[right]) {
-						 left++;
-						 cnt2 = 1;
-					 } else {
+					} else {
 						cnt2 = 2;
 						break;
 					}
