@@ -19,8 +19,11 @@ public class Main {
 			//개수
 			int count = 0;
 			for (int i = 1; i <= N; i++) {
-				int div = mid / i;
-				count += Math.min(div, N);
+				if ((mid/i) >= N) {
+					count += N;
+				} else {
+					count += mid / i;
+				}
 			}
 			//조절
 			if (k <= count) {
