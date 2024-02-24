@@ -41,15 +41,18 @@ public class Main {
 
 			int nextRow = row + dRow;
 			int nextCol = col + dCol;
-
-			if (!isOutOfBounds(nextRow, nextCol)) {
-				if (!visited[board[nextRow][nextCol] - 'A']) {
-					// 갈 수 있으면
-					visited[board[nextRow][nextCol] - 'A'] = true;
-					DFS(depth + 1, nextRow, nextCol);
-					//RECOVERY
-					visited[board[nextRow][nextCol] - 'A'] = false;
-				}
+			
+			//보드를 벗어나면 continue
+			if (isOutOfBounds(nextRow, nextCol))
+				continue;
+			
+			//보드를 벗어나지 않고
+			//방문하지 않았다면
+			if (!visited[board[nextRow][nextCol] - 'A']) {
+				visited[board[nextRow][nextCol] - 'A'] = true;
+				DFS(depth + 1, nextRow, nextCol);
+				//RECOVERY
+				visited[board[nextRow][nextCol] - 'A'] = false;
 			}
 		}
 	}
