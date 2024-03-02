@@ -48,14 +48,14 @@ public class Main {
 			if ((cnt * 2) > (idx + 1)) {
 				break;
 			}
-			String number1 = "";
-			String number2 = "";
+			StringBuilder number1 = new StringBuilder();
+			StringBuilder number2 = new StringBuilder();
 			for (int i = idx - cnt + 1; i <= idx; i++) {
-				number1 += answer[i];
-				number2 += answer[i - cnt];
+				number1.append(answer[i]);
+				number2.append(answer[i - cnt]);
 			}
 
-			if (number1.equals(number2)) {
+			if (number1.toString().contentEquals(number2)) {
 				flag = false;
 				break;
 			}
