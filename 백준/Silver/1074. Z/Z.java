@@ -22,7 +22,7 @@ public class Main {
 		int answer = 0;
 
 		int row = 0, col = 0;
-		while (!(row == r && col == c)) {
+		while (row != r || col != c) {
 			size = size / 2;
 
 			boolean rowUp = r >= row + size;
