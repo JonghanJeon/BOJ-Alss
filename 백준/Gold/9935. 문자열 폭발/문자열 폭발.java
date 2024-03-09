@@ -40,6 +40,7 @@ public class Main {
 	}
 
 	static boolean isSame() {
+		int idx = 0;
 		for (int i = 0; i < bomb.length(); i++) {
 			if (stk.get(stk.size() - bomb.length() + i) != bomb.charAt(i)) {
 				return false;
