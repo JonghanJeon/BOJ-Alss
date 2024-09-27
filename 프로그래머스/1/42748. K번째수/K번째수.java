@@ -3,20 +3,22 @@ import java.util.*;
 class Solution {
     public int[] solution(int[] array, int[][] commands) {
         int[] answer = new int[commands.length];
-        for (int t = 0; t < commands.length; t++) {
-            int[] arr = commands[t];
-            int start = arr[0] - 1;
-            int end = arr[1] - 1;
-            int target = arr[2] - 1;
-            int[] tmp = new int[end - start + 1];
-            int idx = 0;
-            for (int k = start; k <= end; k++) {
-                tmp[idx] = array[k];
-                idx++;
+        
+        int index = 0;
+        for (int[] command : commands) {
+            int i = command[0];
+            int j = command[1];
+            int k = command[2];
+            
+            List<Integer> list = new ArrayList<>();
+            for (int idx = i - 1; idx < j; idx++) {
+                list.add(array[idx]);
             }
-            Arrays.sort(tmp);
-            answer[t] = tmp[target];
+            
+            Collections.sort(list);
+            answer[index++] = list.get(k - 1); 
         }
+        
         return answer;
     }
 }
