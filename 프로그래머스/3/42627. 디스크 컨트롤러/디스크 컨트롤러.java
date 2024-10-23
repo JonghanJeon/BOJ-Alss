@@ -1,42 +1,49 @@
 import java.util.*;
 
 class Solution {
+    
+    class Job {
+        int in;
+        int process;
+        
+        Job(int in, int process) {
+            this.in = in;
+            this.process = process;
+        }
+    }
+    
+    PriorityQueue<Job> jobQue = new PriorityQueue<>((o1, o2) -> {
+        return o1.in - o2.in;
+    });
+    
+    PriorityQueue<Job> workQue = new PriorityQueue<>((o1, o2) -> {
+        return o1.process - o2.process;
+    });
+    
     public int solution(int[][] jobs) {
         int answer = 0;
-        int time = 0;
-        
-        PriorityQueue<int[]> workQue = new PriorityQueue<>(
-            (o1, o2) -> {
-                return o1[1] - o2[1];
-            }
-        );
-            
-        PriorityQueue<int[]> inQue = new PriorityQueue<>(
-            (o1, o2) -> {
-                return o1[0] - o2[0];
-            }
-        );  
-        
-        for (int[] job : jobs) {
-            inQue.offer(job);
+        for (int[] row : jobs) {
+            Job job = new Job(row[0], row[1]);
+            jobQue.add(job);
         }
         
-        while (true) {
-            
-            if (inQue.isEmpty() && workQue.isEmpty()) {
-                break;
+        int time = 0;
+        while(!(jobQue.isEmpty() && workQue.isEmpty())) {
+            while(!jobQue.isEmpty()) {
+                Job cur = jobQue.poll();
+                if (cur.in <= time) workQue.add(cur);
+                else {
+                    jobQue.add(cur);
+                    break;
+                }
             }
             
-            while(!inQue.isEmpty() && inQue.peek()[0] <= time) {
-                workQue.offer(inQue.poll());
-            }
-            
-            if (workQue.isEmpty()) {
-                time = inQue.peek()[0];
-            } else {
-                int[] job = workQue.poll();
-                time += job[1];
-                answer += time - job[0];
+            if (!workQue.isEmpty()) {
+                Job cur = workQue.poll();
+                time += cur.process;
+                answer += (time - cur.in);
+            } else { // 작업 큐가 비었을 때는 시간을 다음 작업까지 당겨주어야 한다.그러지 않으면 무한루프가 돼버린다.
+                time = jobQue.peek().in;
             }
         }
         
