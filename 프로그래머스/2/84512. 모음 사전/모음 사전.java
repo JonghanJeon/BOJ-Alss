@@ -3,26 +3,27 @@ import java.util.*;
 class Solution {
     
     String[] arr = new String[] {"A", "E", "I", "O", "U"};
+    String target;
     int answer = 0;
-    List<String> list = new ArrayList<>();
+    boolean flag = false;
     
     public int solution(String word) {
-        dfs("", 0);
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).equals(word)) {
-                return i;
-            }
-        }
-        
-        return -1;
+        target = word;
+        dfs(0, "");
+        return answer;
     }
     
-    public void dfs(String cur, int cnt) {
-        if (cnt == 6) return;
-        list.add(cur);
-        for (int i = 0; i < 5; i++) {
-            dfs(cur + arr[i], cnt + 1);
+    public void dfs(int depth, String word) {
+        if (depth == 6) return;
+        if (word.equals(target)) {
+            answer++;
+            flag = true;
         }
+        if (flag) return;
+        if (depth != 0) answer++;
         
+        for (String str : arr) {
+            dfs(depth + 1, word + str);
+        }
     }
 }
