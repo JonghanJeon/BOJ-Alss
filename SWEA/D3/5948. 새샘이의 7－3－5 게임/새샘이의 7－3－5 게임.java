@@ -15,7 +15,6 @@ public class Solution {
 	
 	static int T;
 	static int[] numbers;
-	static boolean[] visited;
 	static Set<Integer> set;
 	static StringBuilder answer = new StringBuilder();
 	
@@ -28,7 +27,6 @@ public class Solution {
 		for (int no = 1; no <= T; no++) {
 			answer.append("#").append(no).append(" ");
 			numbers = new int[7];
-			visited = new boolean[7];
 			set = new HashSet<>();
 			st = new StringTokenizer(br.readLine());
 			for (int i = 0; i < 7; i++) {
@@ -53,11 +51,7 @@ public class Solution {
 		}
 		
 		for (int i = idx; i < 7; i++) {
-			if(visited[i]) continue;
-			
-			visited[i] = true;
-			dfs(depth + 1, i, sum + numbers[i]);
-			visited[i] = false;
+			dfs(depth + 1, i + 1, sum + numbers[i]);
 		}
 	}
 }
