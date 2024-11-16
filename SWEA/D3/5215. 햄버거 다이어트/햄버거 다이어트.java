@@ -1,57 +1,58 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
-public class Solution
-{
-	static int N;
-	static int L;
-	static int answer;
-	static int[][]  arr;
+public class Solution {
 	
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int T = sc.nextInt();
+	static class Pair {
+		int score; int cal;
 		
-		for(int test=1; test<=T; test++) {
-			N = sc.nextInt();
-			L = sc.nextInt();
-			
-			arr = new int[N][2];
-			
-			for(int i=0; i<N; i++) {
-				arr[i][0] = sc.nextInt();
-				arr[i][1] = sc.nextInt();
-			}
-			
-			answer = 0;
-			
-			a(0, 0, 0);
-			
-			StringBuilder sb = new StringBuilder();
-			sb.append("#").append(test).append(" ").append(answer);
-			System.out.println(sb.toString());	
+		Pair(int score, int cal) {
+			this.score = score;
+			this.cal = cal;
 		}
 	}
 	
-	static void a (int start, int sumFlavor, int sumCal) {
-		if(sumCal > L) { // 전체 칼로리가 높으면 리턴
-			return;
-		}
-		if(start == N) { // 제일 깊이 들어갔다면, 칼로리 확인해서 바꿔주고 리턴
-			if(sumCal <= L) {
-				if(sumFlavor > answer) {
-					answer = sumFlavor;
-				}
-			}
-			return;
-		}
-		if(sumCal <= L) { // 칼로리가 적다면 바꿔주기
-			if(sumFlavor > answer) {
-				answer = sumFlavor;
-			}
-		}
-		a(start+1, sumFlavor, sumCal); // 이번꺼 제꾸고 다음꺼 가는거
-		a(start+1, sumFlavor+arr[start][0], sumCal+arr[start][1]); // 이번꺼 포함하고 다음꺼 가는거
+	static int T, N, L;
+	static Pair[] arr;
+	static List<Integer> list = new ArrayList<>();
+	static StringBuilder answer = new StringBuilder();
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
 		
+		T = Integer.parseInt(br.readLine());
+		
+		for (int no = 1; no <= T; no++) {
+			answer.append("#").append(no).append(" ");
+			st = new StringTokenizer(br.readLine());
+			N = Integer.parseInt(st.nextToken());
+			L = Integer.parseInt(st.nextToken());
+			arr = new Pair[N];
+			list.clear();
+			
+			for (int i = 0; i < N; i++) {
+				st = new StringTokenizer(br.readLine());
+				arr[i] = new Pair(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+			}
+			
+			dfs(0, 0, 0);
+			
+			Collections.sort(list, Collections.reverseOrder());
+			
+			answer.append(list.get(0)).append("\n");
+		}
+		
+		System.out.println(answer.toString());
+	}
+	
+	public static void dfs(int scoreSum, int calSum, int idx) {
+		list.add(scoreSum);
+		
+		for (int i = idx; i < N; i++) {
+			if (calSum + arr[i].cal <= L) {
+				dfs(scoreSum + arr[i].score, calSum + arr[i].cal, i + 1);
+			}
+		}
 	}
 }
