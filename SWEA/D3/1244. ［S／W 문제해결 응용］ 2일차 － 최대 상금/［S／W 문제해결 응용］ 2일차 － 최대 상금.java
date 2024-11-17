@@ -1,57 +1,71 @@
-import java.nio.channels.ScatteringByteChannel;
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
-public class Solution
-{
+public class Solution {
 	
-	static int chance;
-	static int answer;
-	static String [] arr;
-	
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int T = sc.nextInt();
-		for(int test_case = 1; test_case <= T; test_case ++) {
-			arr = sc.next().split("");
-			chance = sc.nextInt();
-			
-			if(arr.length < chance) {
-				chance = arr.length;
-			}
-			
-			answer = 0;
-			dfs(0, 0);
-			
-			StringBuilder sb = new StringBuilder();
-			sb.append("#").append(test_case).append(" ").append(answer);
-			System.out.println(sb.toString());
+	static class Pair {
+		int v, c;
+		
+		Pair(int v, int c) {
+			this.v = v;
+			this.c = c;
 		}
 	}
 	
-	static void dfs(int start, int cnt) {
+	static int T, K, result;
+	static int[] arr;
+	static StringBuilder sb = new StringBuilder();
+	
+	public static void main(String[] args) throws Exception{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
 		
-		if(cnt == chance) {
-			String str = "";
-			for(String s: arr) {
-				str += s;
+		T = Integer.parseInt(br.readLine());
+		
+		for (int no = 1; no <= T; no++) {
+			sb.append("#" + no + " ");
+			st = new StringTokenizer(br.readLine());
+			String str = st.nextToken();
+			K = Integer.parseInt(st.nextToken());
+			arr = new int[str.length()];
+			for (int i = 0; i < str.length(); i++) {
+				arr[i] = Integer.parseInt(str.substring(i, i + 1));
 			}
-			answer = Math.max(Integer.parseInt(str), answer);
+			
+			result = Integer.MIN_VALUE;
+			
+			dfs(0, 0);
+			
+			sb.append(result).append("\n");
+		}
+		
+		System.out.println(sb.toString());
+	}
+	
+	public static void dfs(int cnt, int idx) {
+		if (cnt == K) {
+			int x = 1;
+			int num = 0;
+			for (int i = arr.length - 1; i >= 0; i--) {
+				num += arr[i] * x;
+				x *= 10;
+			}
+			result = Math.max(result, num);
 			return;
 		}
 		
-		for(int i=start; i<arr.length; i++) {
-			for(int j=i+1; j<arr.length; j++) {
-				String tmp = arr[i];
-				arr[i] = arr[j];
-				arr[j] = tmp;
-				
-				dfs(i, cnt+1);
-				
-				tmp = arr[i];
-				arr[i] = arr[j];
-				arr[j] = tmp;
+		for (int i = idx; i < arr.length; i++) {
+			for (int j = i + 1; j < arr.length; j++) {
+				swap(i, j);
+				dfs(cnt + 1, i);
+				swap(i, j);
 			}
 		}
-		
+	}
+	
+	static void swap(int i, int j) {
+		int tmp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = tmp;
 	}
 }
